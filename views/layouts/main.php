@@ -27,7 +27,7 @@ AppAsset::register($this);
 <div class="wrap">
     <?php
     NavBar::begin([
-        'brandLabel' => 'My Company',
+        'brandLabel' => 'Boletim',
         'brandUrl' => Yii::$app->homeUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
@@ -36,11 +36,18 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+<<<<<<< HEAD
 		    ['label' => 'Country', 'url' => ['country/index']],
             ['label' => 'Faltas', 'url' => ['falta/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Nota', 'url' => ['/nota/index']],
 			['label' => 'Professor', 'url' => ['/professor/index']],
+=======
+		    ['label' => 'Alunos', 'url' => ['aluno/index']],
+            ['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Materia', 'url' => ['materia/index']],
+            ['label' => 'Contact', 'url' => ['/site/contact']],
+>>>>>>> 77876c9377915d17b5360540c89353a4fa8a2e93
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -68,7 +75,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+        <p class="pull-left">&copy; Boletim <?= date('Y') ?></p>
 
         <p class="pull-right"><?= Yii::powered() ?></p>
     </div>
