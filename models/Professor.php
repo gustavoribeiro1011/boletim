@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "professor".
  *
  * @property integer $id
- * @property integer $nome
+ * @property string $nome
  */
 class Professor extends \yii\db\ActiveRecord
 {
@@ -27,7 +27,7 @@ class Professor extends \yii\db\ActiveRecord
     {
         return [
             [['nome'], 'required'],
-            [['nome'], 'integer'],
+            [['nome'], 'string', 'max' => 50],
         ];
     }
 

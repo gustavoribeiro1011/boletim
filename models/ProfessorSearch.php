@@ -18,7 +18,8 @@ class ProfessorSearch extends Professor
     public function rules()
     {
         return [
-            [['id', 'nome'], 'integer'],
+            [['id'], 'integer'],
+            [['nome'], 'safe'],
         ];
     }
 
@@ -59,8 +60,9 @@ class ProfessorSearch extends Professor
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'nome' => $this->nome,
         ]);
+
+        $query->andFilterWhere(['like', 'nome', $this->nome]);
 
         return $dataProvider;
     }
