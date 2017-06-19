@@ -1,0 +1,31 @@
+/**
+ * Select para montar a tela de cadastro de notas que o professor irá utilizar
+ *
+ */
+ 
+ 
+Select 
+
+Notas.NotaID,
+Materias.MateriaNome, 
+Alunos.AlunoNome,
+Alunos.AlunoID,
+
+
+       max(case when NotaBimestre = 1 then Nota else null end) as 1bim,
+       max(case when NotaBimestre = 2 then Nota else null end) as 2bim,
+       max(case when NotaBimestre = 3 then Nota else null end) as 3bim,
+       max(case when NotaBimestre = 4 then Nota else null end) as 4bim
+         
+From ((notas 
+
+INNER JOIN Materias 
+       ON Notas.MateriaID = Materias.MateriaID) 
+INNER JOIN Alunos
+       ON Notas.AlunoID = Alunos.AlunoID)	   
+
+group by (NotaID)
+
+
+----------------------------------------------------------------------------------------------------------
+
