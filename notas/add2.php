@@ -15,27 +15,40 @@
 
       require_once('../db/conexao.php');
 	  //$id = $_SESSION['alunoId'];
-      $select_nota_turma= "Select 
-
-Notas.NotaID,
-Materias.MateriaNome, 
-Alunos.AlunoNome,
-Alunos.AlunoID,
-
-
-       max(case when NotaBimestre = 1 then Nota else null end) as 1bim,
-       max(case when NotaBimestre = 2 then Nota else null end) as 2bim,
-       max(case when NotaBimestre = 3 then Nota else null end) as 3bim,
-       max(case when NotaBimestre = 4 then Nota else null end) as 4bim
-         
-From ((notas 
-
-INNER JOIN Materias 
-       ON Notas.MateriaID = Materias.MateriaID) 
-INNER JOIN Alunos
-       ON Notas.AlunoID = Alunos.AlunoID)	   
-
-group by (NotaID)"; 
+      $select_nota_turma= "SELECT a.alunonome AS aluno,
+       m.materianome AS disciplina,
+       GROUP_CONCAT(CASE n.notabimestre
+                      WHEN 1 THEN notaid
+                    END) AS notaidbim1,
+       AVG(CASE n.notabimestre
+             WHEN 1 THEN n.nota
+             ELSE null
+           END) AS bim1,
+       GROUP_CONCAT(CASE n.notabimestre
+                      WHEN 2 THEN notaid
+                    END) AS notaidbim2,
+       AVG(CASE n.notabimestre
+             WHEN 2 THEN n.nota
+             ELSE null
+           END) AS bim2,
+       GROUP_CONCAT(CASE n.notabimestre
+                      WHEN 3 THEN notaid
+                    END) AS notaidbim3,
+       AVG(CASE n.notabimestre
+             WHEN 3 THEN n.nota
+             ELSE null
+           END) AS bim3,
+       GROUP_CONCAT(CASE n.notabimestre
+                      WHEN 4 THEN notaid
+                    END) AS notaidbim4,
+       AVG(CASE n.notabimestre
+             WHEN 4 THEN n.nota
+             ELSE null
+           END) AS bim4
+  FROM notas n
+ INNER JOIN materias m ON m.materiaid = n.materiaid
+ INNER JOIN alunos a ON a.alunoid = n.alunoid
+ GROUP BY n.materiaid, n.alunoid, a.alunonome, m.materianome"; 
    
       // executa a query
       $dados_nota = mysql_query($select_nota_turma, $conecta) or die(mysql_error());      
@@ -49,15 +62,15 @@ group by (NotaID)";
 
 <div class="container-fluid">                
 <div class="table-responsive"> 
-<table class="table-bordered fluid-container" width="80%" align="center">
+<table class="table table-striped table-bordered" align="center">
   <tr>
-  	<td><b>NOTA ID</b></td>
-    <td><b>ALUNO</b></td>	
-    <td><b>MATÉRIA</b></td>
-    <td><b>1BIM</B></td>
-    <td><b>2BIM</B></td>
-    <td><b>3BIM</B></td>
-    <td><b>4BIM</B></td>
+    <td width="30%"><b>DISCIPLINA</b></td>	
+    <td width="30%"><b>ALUNO</b></td>
+	<td width="10%" colspan="2"><b>1B</b></td>
+    <td width="10%" colspan="2"><b>2B</b></td>
+    <td width="10%" colspan="2"><b>3B</b></td>
+    <td width="10%" colspan="2"><b>4B</b></td>
+
   </tr>
   
   <?php
@@ -67,13 +80,25 @@ group by (NotaID)";
 		do {
 ?>
   <tr>
-    <td><?php echo $linha_nota['NotaID'];?></td>    
-	<td><?php echo strtoupper($linha_nota['AlunoNome']);?></td>
-    <td><?php echo $linha_nota['MateriaNome'];?></td>
-    <td><?php echo $linha_nota['1bim'];?></td>
-    <td><?php echo $linha_nota['2bim'];?></td>
-    <td><?php echo $linha_nota['3bim'];?></td>
-    <td><?php echo $linha_nota['4bim'];?></td>
+    <td><?php echo $linha_nota['disciplina'];?></td>  
+	
+
+	<td><?php echo strtoupper($linha_nota['aluno']);?></td>
+	
+
+	<td><?php echo $linha_nota['bim1'];?></a></td>
+	    <td><a href="edit2.php?NotaID=<?php echo $linha_nota['notaidbim1']; ?>"><i class="fa fa-pencil"></i></a></td>	
+	
+
+	<td><?php echo $linha_nota['bim2'];?></td>
+	<td><a href="edit2.php?NotaID=<?php echo $linha_nota['notaidbim2']; ?>"><i class="fa fa-pencil"></i></a></td>	
+	
+	
+    <td><?php echo $linha_nota['bim3'];?></td>
+    <td><a href="edit2.php?NotaID=<?php echo $linha_nota['notaidbim3']; ?>"><i class="fa fa-pencil"></i></a></td>	
+		
+    <td><?php echo $linha_nota['bim4'];?></td>
+    <td><a href="edit2.php?NotaID=<?php echo $linha_nota['notaidbim4']; ?>"><i class="fa fa-pencil"></i></a></td>
   </tr>
   <?php
 		// finaliza o loop que vai mostrar os dados

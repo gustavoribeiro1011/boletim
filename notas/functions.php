@@ -74,6 +74,26 @@ function edit() {
 /**
  *	Atualizacao/Edicao de Nota
  */
+function edit_nota_coletivo() {
+  $now = date_create('now', new DateTimeZone('America/Sao_Paulo'));
+  if (isset($_GET['NotaID'])) {
+    $id = $_GET['NotaID'];
+    if (isset($_POST['nota'])) {
+      $nota = $_POST['nota'];
+      $nota['modified'] = $now->format("Y-m-d H:i:s");
+      update_nota('notas', $id, $nota);
+      header('location: add2.php');
+    } else {
+      global $nota;
+      $nota = find6('notas', $id);
+    } 
+  } else {
+    header('location: add2.php');
+  }
+}
+/**
+ *	Atualizacao/Edicao de Nota
+ */
 function edit_nota() {
   $now = date_create('now', new DateTimeZone('America/Sao_Paulo'));
   if (isset($_GET['NotaID'])) {

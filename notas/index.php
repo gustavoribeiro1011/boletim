@@ -16,7 +16,8 @@
 
 <?php if ($db) : ?>
 <li><a href="<?php echo BASEURL;?>/notas">Home</a></li>
-<li><a href="<?php echo BASEURL;?>/notas/add.php">Cadastrar nota</a></li>
+<li><a href="<?php echo BASEURL;?>/notas/add.php">Cadastrar nota individual</a></li>
+<li><a href="<?php echo BASEURL;?>/notas/filtro-nota.php">Cadastrar nota coletivo</a></li>
 <li><a href="<?php echo BASEURL;?>/notas/notas.php">Verificar notas cadastradas</a></li>
 
 <?php else : ?>
